@@ -172,9 +172,11 @@ class PayPal(object):
         }
 
         parameters.update(kwargs)
+
         query_string = self.signature + urllib.urlencode(parameters)
         response = urllib.urlopen(self.NVP_API_ENDPOINT, query_string).read()
         response_dict = parse_qs(response)
+
         self.api_response = response_dict
         state = self._get_value_from_qs(response_dict, "ACK")
         if state in ["Success", "SuccessWithWarning"]:
